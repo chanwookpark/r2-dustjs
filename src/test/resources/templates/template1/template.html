@@ -1,0 +1,9 @@
+<div class="list-group">
+    {#productList.content}
+    <a href="/product/{productId}" class="list-group-item"
+       onclick="push('CATEGORY', '{#category}{categoryId}{/category}_{productId}')">
+        {#imageList}<img src="{.}"/>{/imageList}
+        <h4 class="list-group-item-heading">{productName}</h4>
+    </a>
+    {/productList.content}
+</div>

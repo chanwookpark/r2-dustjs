@@ -1,0 +1,46 @@
+{
+  "category": {
+    "categoryId": 28,
+    "categoryName": "mac",
+    "categoryImageUrl": "http://cdn.image.com/image.png"
+  },
+  "productList": {
+    "content": [
+      {
+        "productId": "mac001",
+        "updated": 1434384635316,
+        "productName": "macbook-pro-2010-mid",
+        "status": "SALES",
+        "imageList": [
+          "http://cdn.image.com/image.png"
+        ]
+      },
+      {
+        "productId": "mac002",
+        "updated": 1434384635317,
+        "productName": "macbook-pro-2010-mid",
+        "status": "SALES",
+        "imageList": [
+          "http://cdn.image.com/image.png"
+        ]
+      },
+      {
+        "productId": "mac003",
+        "updated": 1434384635317,
+        "productName": "macbook-pro-2010-mid",
+        "status": "SALES",
+        "imageList": [
+          "http://cdn.image.com/image.png"
+        ]
+      }
+    ],
+    "last": true,
+    "totalElements": 6,
+    "totalPages": 1,
+    "size": 0,
+    "number": 0,
+    "first": true,
+    "sort": null,
+    "numberOfElements": 6
+  }
+}
