@@ -48,10 +48,11 @@ public class DustjsView extends InternalResourceView { //FIXME AbstractView로 �
     protected Map<String, Object> createMergedOutputModel(Map<String, ?> model, HttpServletRequest request, HttpServletResponse response) {
         final Map<String, Object> mergedOutputModel = super.createMergedOutputModel(model, request, response);
 
-        final DustModel dm = (DustModel) mergedOutputModel.get(MODEL_KEY);
+        DustModel dm = (DustModel) mergedOutputModel.get(MODEL_KEY);
 
         if (dm == null) {
-            throw new R2Exception("렌더링을 위한 데이터가 지정되지 않았습니다. 코드를 확인해주세요!!");
+            // 단순한 화면 네비게이션도 가능하도록 예외를 던지는 로직에서 기본 생성 로직으로 변경
+            dm = new DustModel();
         }
 
         //TODO 한 번 로딩하면 계속 사용하도록 개선
@@ -75,12 +76,23 @@ public class DustjsView extends InternalResourceView { //FIXME AbstractView로 �
 
     protected void createPartial() {
         if (usePartial) {
+            final File file;
             try {
-                final File[] files = new ClassPathResource("/templates/partial").getFile().listFiles();
+                file = new ClassPathResource("/templates/partial").getFile();
+            } catch (IOException e) {
+                logger.warn("Partial 폴더가 생성되어 있지 않아 Partial 로딩은 취소되었습니다!");
+                return;
+            }
+
+            try {
+                if (file == null) {
+                    return;
+                }
+                final File[] files = file.listFiles();
                 for (File f : files) {
                     loadPartial(f);
                 }
-            } catch (IOException e) {
+            } catch (Exception e) {
                 throw new R2Exception("Partial 로딩 중 에러가 발생했습니다.", e);
             }
         }
