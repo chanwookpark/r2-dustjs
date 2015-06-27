@@ -1,9 +1,7 @@
-package r2.dustjs;
+package r2.dustjs.core;
 
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
-import r2.dustjs.core.RenderingEngine;
-import r2.dustjs.core.RenderingEngineFactory;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -15,7 +13,7 @@ import static org.junit.Assert.assertThat;
 /**
  * @author chanwook
  */
-public class RenderingEngineTests {
+public class RenderingEngineTest {
 
     public static final String COMPILED_HTML = "(function(dust){dust.register(\"key1\",body_0);function body_0(chk,ctx){return chk.w(\"<h1>Hello!</h1><span>\").f(ctx.get([\"name\"], false),ctx,\"h\").w(\"</span>\");}body_0.__dustBody=!0;return body_0}(dust));";
     public static final String RENDER_HTML = "<h1>Hello!</h1><span>chanwook</span>";
