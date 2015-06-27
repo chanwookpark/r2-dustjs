@@ -14,7 +14,7 @@ public class DustViewTest {
     public void resolveSrcTemplate() throws Exception {
         TemplateFileLoader l = new MultipathTemplateFileLoader();
 //        /Users/chanwook/src/r2-dustjs/src/test/resources/templates/template2/template.html
-        final String template = l.getTemplate("templates/template2/template.html");
+        final String template = l.getTemplate("/templates/template2/template.html");
         assertThat(template, notNullValue());
         assertThat(template, is("<html></html>"));
     }
