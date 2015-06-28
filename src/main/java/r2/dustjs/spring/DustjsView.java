@@ -34,7 +34,7 @@ import static r2.dustjs.spring.DustModel.PREFIX;
 //TODO AbstractView로 해야할까..
 public class DustjsView extends InternalResourceView {
 
-    private String partialTemplatePath = "/templates/partial";
+    private String partialTemplatePath = "/templates/partial/";
 
     private String viewHtmlKey = "_view_html";
     private String jsonDataKey = "_view_data";
@@ -51,11 +51,7 @@ public class DustjsView extends InternalResourceView {
     protected Map<String, Object> createMergedOutputModel(Map<String, ?> model, HttpServletRequest request, HttpServletResponse response) {
         final Map<String, Object> mergedOutputModel = super.createMergedOutputModel(model, request, response);
 
-        DustModel dm = (DustModel) mergedOutputModel.get(MODEL_KEY);
-        if (dm == null) {
-            // 단순한 화면 네비게이션도 가능하도록 예외를 던지는 로직에서 기본 생성 로직으로 변경
-            dm = new DustModel();
-        }
+        DustModel dm = createDustModel(mergedOutputModel, request);
 
         final String templateKey = getUrl();
         final String template = templateLoader.getTemplate(templateKey);
@@ -70,6 +66,31 @@ public class DustjsView extends InternalResourceView {
         mergedOutputModel.putAll(dm.toMap());
         return mergedOutputModel;
     }
+
+    protected DustModel createDustModel(Map<String, Object> mergedOutputModel, HttpServletRequest request) {
+        DustModel dm = (DustModel) mergedOutputModel.get(MODEL_KEY);
+        if (dm == null) {
+            // 단순한 화면 네비게이션도 가능하도록 예외를 던지는 로직에서 기본 생성 로직으로 변경
+            dm = new DustModel();
+        }
+
+        addParameter(request, dm);
+        // TODO 객체 타입으로 JSON 변환시 에러가 발생할 여자가 많아 우선 주석처리 함
+        //        addAttribute(request, dm);
+        //        addSession(request, dm);
+
+        Object o = getStaticAttributes().get(DustModel.MAPPER_KEY);
+        if (o != null) {
+            DustModelMapper mapper = (DustModelMapper) o;
+            mapper.bind(dm, mergedOutputModel, request);
+        }
+        return dm;
+    }
+
+    private void addParameter(HttpServletRequest request, DustModel dm) {
+        dm.put("param", request.getParameterMap());
+    }
+
 
     protected void createRenderingHtml(Map<String, Object> mergedOutputModel, DustModel dm, String templateKey, String template) {
         final String compiled = renderingEngine.compile(templateKey, template);

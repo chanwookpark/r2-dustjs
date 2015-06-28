@@ -12,6 +12,7 @@ public class DustModel {
 
     public static final String PREFIX = "_d.";
     public static final String MODEL_KEY = "_dustModel";
+    public static final String MAPPER_KEY = "_dm_initializer";
 
     public Map<String, Object> modelMap = new HashMap<String, Object>();
 
