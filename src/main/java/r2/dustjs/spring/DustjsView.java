@@ -43,7 +43,7 @@ public class DustjsView extends InternalResourceView {
     //TODO 개선요
     private RenderingEngine renderingEngine = new RenderingEngineFactory().getObject();
 
-    private TemplateFileLoader templateLoader = new MultipathTemplateFileLoader();
+    private TemplateFileLoader templateLoader = new SimpleTemplateFileLoader();
 
     private ObjectMapper objectMapper = new ObjectMapper();
     private boolean usePartial = true;
@@ -137,8 +137,8 @@ public class DustjsView extends InternalResourceView {
         //partial은 로딩까지만 함
         renderingEngine.load(compiled);
 
-        if (logger.isInfoEnabled()) {
-            logger.info(">> Partial 로딩 완료 [" + partialTemplateKey + "] " + partialTemplate);
+        if (logger.isDebugEnabled()) {
+            logger.debug(">> Partial 로딩 완료 [" + partialTemplateKey + "] " + partialTemplate);
         }
     }
 

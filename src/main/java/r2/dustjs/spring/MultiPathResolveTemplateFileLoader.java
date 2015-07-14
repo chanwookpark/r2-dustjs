@@ -14,12 +14,12 @@ import java.util.List;
 /**
  * @author chanwook
  */
-public class MultipathTemplateFileLoader implements TemplateFileLoader {
+public class MultiPathResolveTemplateFileLoader implements TemplateFileLoader {
 
-    private final Logger logger = LoggerFactory.getLogger(MultipathTemplateFileLoader.class);
+    private final Logger logger = LoggerFactory.getLogger(MultiPathResolveTemplateFileLoader.class);
 
     private static final String[] RESOURCE_LOCATION = new String[]{
-            "src/main/resources", "src/test/resources", ""
+            "src/main/resources", "src/test/resources", "target/classes"
     };
 
     public String getTemplate(String templateKey) {
@@ -44,7 +44,7 @@ public class MultipathTemplateFileLoader implements TemplateFileLoader {
                 } catch (IOException e) {
                     // template key에 해당하는 파일이 없을 경우에는 HTML 파일 조회이던지 redirect와 같은 네비게이션으로 동작할 수 있도록 정상 처리
                     if (logger.isDebugEnabled()) {
-                        logger.debug(path + "에 해당하는 Dust 템플릿 파일이 존재하지 않습니다.");
+                        logger.debug(path + "에 해당하는 Dust 템플릿 파일이 존재하지 않습니다.", e);
                     }
                     continue;
                 }

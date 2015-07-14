@@ -18,7 +18,7 @@ import static org.junit.Assert.assertThat;
 public class DustViewTest {
     @Test
     public void resolveSrcTemplate() throws Exception {
-        TemplateFileLoader l = new MultipathTemplateFileLoader();
+        TemplateFileLoader l = new MultiPathResolveTemplateFileLoader();
         final String template = l.getTemplate("/templates/template2/template.html");
         assertThat(template, notNullValue());
         assertThat(template, is("<html></html>"));
