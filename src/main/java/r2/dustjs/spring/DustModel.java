@@ -1,5 +1,8 @@
 package r2.dustjs.spring;
 
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,7 +17,9 @@ public class DustModel {
     public static final String MODEL_KEY = "_dustModel";
     public static final String MAPPER_KEY = "_dm_initializer";
 
-    public Map<String, Object> modelMap = new HashMap<String, Object>();
+    private Map<String, Object> modelMap = new HashMap<String, Object>();
+
+    private ModelMapper m = new ModelMapper();
 
     public Object put(String key, Object value) {
         return modelMap.put(PREFIX + key, value);
@@ -28,7 +33,39 @@ public class DustModel {
         return value;
     }
 
+    public <T> T bind(String key, Object source, Class<T> target) {
+        final T result = m.map(source, target);
+        put(key, result);
+        return result;
+    }
+
+    public <T> T bind(String key, Object source, TypeToken<T> typeToken) {
+        final T result = m.map(source, typeToken.getType());
+        put(key, result);
+        return result;
+    }
+
+    public <T> T bind(String key, Object source, T destination) {
+        m.map(source, destination);
+        put(key, destination);
+        return destination;
+    }
+
+
+    /*
+    public <T> List<T> bindList(String key, Object source, Class<T> target) {
+        Type type = new TypeToken<List<String>>() {}.getType();
+        final List<T> result = m.map(source, type);
+        put(key, result);
+        return result;
+    }
+    */
+
     public Map<String, ?> toMap() {
         return modelMap;
+    }
+
+    public static class ListType<T> extends TypeToken<T> {
+
     }
 }
