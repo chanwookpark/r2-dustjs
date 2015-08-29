@@ -1,4 +1,6 @@
 # r2-dustjs
-Dust.js 사용한 JDK8 Nashorn 기반 서버 사이드 렌더링 구현체.
+I experienced using JavaScript template library in JVM.
 
-JDK8 환경이 필요함.
+Especially, thi project is implementation to dust.js of linked-in with JDK 8 Nashorn.
+
+while at working... 
